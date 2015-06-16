@@ -15,11 +15,12 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    ImageView viewById = (ImageView) findViewById(R.id.image);
+    //noinspection SuspiciousNameCombination
     Picasso.with(this)
-      .load("http://sports.cbsimg.net/images/nhl/blog/020214_datsyuk.jpg")
-      .fit()
-      .into(viewById);
+      .load("http://blog.mlive.com/snapshots/2008/01/wink.jpg")
+      .resizeDimen(R.dimen.width, R.dimen.width)
+      .centerCrop()
+      .into((ImageView) findViewById(R.id.image));
   }
 
   @Override
