@@ -20,13 +20,14 @@ import android.widget.ImageView;
 public class HexagonImageView extends ImageView {
   public static final String TAG = "HexagonImageView";
 
-  private static final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-  private static final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
   private static final PorterDuffXfermode xfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
-  private static final Path hexagonPath = new Path();
+
+  private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+  private final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+  private final Path hexagonPath = new Path();
+  private final Rect rect = new Rect();
 
   private int borderSize;
-  private Rect rect;
 
   public HexagonImageView(Context context) {
     super(context);
@@ -60,6 +61,7 @@ public class HexagonImageView extends ImageView {
 
   @Override protected void onSizeChanged(int width, int height, int oldw, int oldh) {
     super.onSizeChanged(width, height, oldw, oldh);
+
     final int centerPoint = width / 2, // center point of the hexagon
       borderOffset = borderSize / 2, // move the hexagon in by half the border size
       offset = (int) ((centerPoint - borderOffset) * 0.57735026919d), // adjacent * tan(30deg)
@@ -74,7 +76,7 @@ public class HexagonImageView extends ImageView {
     hexagonPath.lineTo(width - borderOffset, offset); // right top
     hexagonPath.close(); //back to top
 
-    rect = new Rect(0, 0, width, height);
+    rect.set(0, 0, width, height);
   }
 
   @Override
