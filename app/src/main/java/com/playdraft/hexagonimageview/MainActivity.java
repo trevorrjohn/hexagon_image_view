@@ -1,4 +1,4 @@
-package com.playdraft.hexigonimageview;
+package com.playdraft.hexagonimageview;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView viewById = (ImageView) findViewById(R.id.image);
     Picasso.with(this)
       .load("http://sports.cbsimg.net/images/nhl/blog/020214_datsyuk.jpg")
+      .fit()
       .into(viewById);
   }
 

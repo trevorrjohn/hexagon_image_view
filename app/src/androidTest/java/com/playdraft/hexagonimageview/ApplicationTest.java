@@ -1,4 +1,4 @@
-package com.playdraft.hexigonimageview;
+package com.playdraft.hexagonimageview;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

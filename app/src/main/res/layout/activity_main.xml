@@ -9,7 +9,7 @@
                 android:background="#788b98"
                 tools:context=".MainActivity">
 
-  <com.playdraft.hexigonimageview.HexigonImageView
+  <com.playdraft.hexagonimageview.HexagonImageView
     android:src="@drawable/red"
     android:id="@+id/image"
     android:layout_width="@dimen/width"
