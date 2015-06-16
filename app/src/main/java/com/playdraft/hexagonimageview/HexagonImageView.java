@@ -62,21 +62,23 @@ public class HexagonImageView extends ImageView {
   @Override protected void onSizeChanged(int width, int height, int oldw, int oldh) {
     super.onSizeChanged(width, height, oldw, oldh);
 
-    final int centerPoint = width / 2, // center point of the hexagon
+    final int centerPoint = height / 2, // center point of the hexagon
       borderOffset = borderSize / 2, // move the hexagon in by half the border size
       offset = (int) ((centerPoint - borderOffset) * 0.57735026919d), // adjacent * tan(30deg)
-      length = width - borderSize - offset - offset; // length of one side of a hexagon
+      margin = (int) ((height - 2 * borderOffset) / 2f * 0.86602540378f), // parallel distance from center
+      length = height - borderSize - offset - offset; // length of one side of a hexagon
 
     hexagonPath.reset();
     hexagonPath.moveTo(centerPoint, borderOffset); // top
-    hexagonPath.lineTo(borderOffset, offset); // left top
-    hexagonPath.lineTo(borderOffset, offset + length); // left bottom
-    hexagonPath.lineTo(centerPoint, width - borderOffset); // bottom
-    hexagonPath.lineTo(width - borderOffset, offset + length); // right bottom
-    hexagonPath.lineTo(width - borderOffset, offset); // right top
+    hexagonPath.lineTo(centerPoint - margin, offset); // left top
+    hexagonPath.lineTo(centerPoint - margin, offset + length); // left bottom
+    hexagonPath.lineTo(centerPoint, height - borderOffset); // bottom
+    hexagonPath.lineTo(centerPoint + margin, offset + length); // right bottom
+    hexagonPath.lineTo(centerPoint + margin, offset); // right top
     hexagonPath.close(); //back to top
 
-    rect.set(0, 0, width, height);
+    //noinspection SuspiciousNameCombination
+    rect.set(0, 0, height, height);
   }
 
   @Override
