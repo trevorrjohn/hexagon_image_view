@@ -63,17 +63,18 @@ public class HexagonImageView extends ImageView {
 
     final int centerPoint = height / 2, // center point of the hexagon
       borderOffset = borderSize / 2, // move the hexagon in by half the border size
-      offset = (int) ((centerPoint - borderOffset) * 0.57735026919d), // adjacent * tan(30deg)
-      margin = (int) ((height - 2 * borderOffset) / 2f * 0.86602540378f), // parallel distance from center
-      length = height - borderSize - offset - offset; // length of one side of a hexagon
+      hexHeight = height - borderSize, // total height of hexagon
+      offset = hexHeight / 4, // regular triangle
+      margin = (int) (hexHeight / 2 * 0.86602540378f), // distance from center parallel distance of adjacent point
+      length = hexHeight / 2; // length of one side of a hexagon
 
     hexagonPath.reset();
     hexagonPath.moveTo(centerPoint, borderOffset); // top
-    hexagonPath.lineTo(centerPoint - margin, offset); // left top
-    hexagonPath.lineTo(centerPoint - margin, offset + length); // left bottom
+    hexagonPath.lineTo(centerPoint - margin, offset + borderOffset); // left top
+    hexagonPath.lineTo(centerPoint - margin, offset + length + borderOffset); // left bottom
     hexagonPath.lineTo(centerPoint, height - borderOffset); // bottom
-    hexagonPath.lineTo(centerPoint + margin, offset + length); // right bottom
-    hexagonPath.lineTo(centerPoint + margin, offset); // right top
+    hexagonPath.lineTo(centerPoint + margin, offset + length + borderOffset); // right bottom
+    hexagonPath.lineTo(centerPoint + margin, offset + borderOffset); // right top
     hexagonPath.close(); //back to top
 
     //noinspection SuspiciousNameCombination
