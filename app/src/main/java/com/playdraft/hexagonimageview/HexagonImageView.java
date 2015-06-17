@@ -1,9 +1,9 @@
 package com.playdraft.hexagonimageview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -30,25 +30,30 @@ public class HexagonImageView extends ImageView {
 
   public HexagonImageView(Context context) {
     super(context);
-    init();
+    init(null);
   }
 
   public HexagonImageView(Context context, AttributeSet attrs) {
     super(context, attrs);
-    init();
+    init(attrs);
   }
 
   public HexagonImageView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    init();
+    init(attrs);
   }
 
-  private void init() {
-    borderSize = getResources().getDimensionPixelSize(R.dimen.border_size);
+  private void init(AttributeSet attrs) {
+    TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.HexagonImageView, 0, 0);
+
+    borderSize = typedArray.getDimensionPixelSize(R.styleable.HexagonImageView_borderSize, 0);
+    int color = typedArray.getColor(R.styleable.HexagonImageView_borderColor, getResources().getColor(android.R.color.white));
+
+    typedArray.recycle();
 
     paint.setStrokeWidth(borderSize);
 
-    borderPaint.setColor(Color.parseColor("white"));
+    borderPaint.setColor(color);
     borderPaint.setStrokeWidth(borderSize);
     borderPaint.setDither(true);
     borderPaint.setStyle(Paint.Style.STROKE);
@@ -56,6 +61,7 @@ public class HexagonImageView extends ImageView {
     borderPaint.setStrokeCap(Paint.Cap.ROUND);
     borderPaint.setPathEffect(new CornerPathEffect(borderSize));
     borderPaint.setAntiAlias(true);
+
   }
 
   @Override protected void onSizeChanged(int width, int height, int oldw, int oldh) {
